@@ -66,7 +66,7 @@ session_start();
                     <div class="card-body">
                         <h5 class="card-title">Manage Equipment</h5>
                         <p class="card-text">Add, edit, or delete Equipment in the inventory.</p>
-                        <a href="#" class="btn btn-primary">Go to Equipment</a>
+                        <a href="admin-equipments.php" class="btn btn-primary">Go to Equipment</a>
                     </div>
                 </div>
             </div>

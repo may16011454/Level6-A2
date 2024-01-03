@@ -70,7 +70,7 @@ class MemberController {
                     VALUES (:firstname, :lastname, :email, :password)"; 
 
             // Execute the query with the provided member data
-            $this->db->runSQL($sql, $member)->execute();
+            $this->db->runSQL($sql, $member);
             return true;
 
         } catch (PDOException $e) {
