@@ -10,7 +10,7 @@
     function redirect($page, array $params = [])
     {
         $qs = $params ? '?' . http_build_query($params) : '';
-        header("Location:$page.php" . $qs);
+        header("Location:$page" . $qs);
         exit;
     }
 
