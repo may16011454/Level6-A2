@@ -1,16 +1,22 @@
 <?php
 session_start();
-?>
-
-<?php $title = 'Manage Equipments'; require __DIR__ . "/inc/header.php"; ?>
-
-
-
-<?php
+require_once './inc/header.php';
 require_once './inc/functions.php';
 $equipmentController = $controllers->equipment();
-?>
 
+// Check for the delete action
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    // Retrieve the id of the equipment to be deleted
+    $equipmentId = $_GET['id'];
+
+    // Call a function to handle the deletion
+    $equipmentController->delete_equipment($equipmentId);
+
+    // Redirect back to the admin-equipments.php page to avoid duplicate form submissions
+    header('Location: admin-equipments.php');
+    exit;
+}
+?>
 
 <div class="container mt-4">
     <h2>Admin Dashboard - Equipment Inventory</h2>
