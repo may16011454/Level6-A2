@@ -29,7 +29,7 @@ session_start();
                     <div class="card-body">
                         <h5 class="card-title">Manage Users</h5>
                         <p class="card-text">View and manage user accounts.</p>
-                        <a href="#" class="btn btn-primary">Go to Users</a>
+                        <a href="admin-members.php" class="btn btn-primary">Go to Users</a>
                     </div>
                 </div>
             </div>
