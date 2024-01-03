@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   
           // Redirect based on user type
           if ($_SESSION['user_type'] === 'admin') {
-              redirect('./Inventory.php'); // Redirect admin users
+              redirect('./admin-dashboard'); // Redirect admin users
           } else {
               redirect('member'); // Redirect regular users
           }
