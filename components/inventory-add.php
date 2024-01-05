@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Check if the insertion was successful
         if ($item) {
             // Redirect or show a success message
-            redirect("./Inventory");
+            redirect("./admin-equipments.php");
         } else {
             // Set error message if adding equipment fails
             $message = "Failed to add equipment. Please try again.";

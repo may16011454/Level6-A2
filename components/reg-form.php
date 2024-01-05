@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $member = $controllers->members()->register_member($args);
     if ($member) {
       // Redirect to login page on successful registration
-      redirect("login", ["error" => "Please login with your new account"]);
+      redirect("login.php", ["error" => "Please login with your new account"]);
     } else {
       // Set error message if email is already registered
       $message = "Email already registered.";
