@@ -36,17 +36,28 @@ class MemberController {
     // Method to retrieve all member records
     public function get_all_members()
     {
-        // SQL query to select all members
-        $sql = "SELECT * FROM users";
+        // SQL query to select all members with their roles
+        $sql = "SELECT users.ID, users.firstname, users.lastname, users.email, GROUP_CONCAT(roles.name) AS roles
+                FROM users
+                LEFT JOIN user_roles ON users.ID = user_roles.user_id
+                LEFT JOIN roles ON user_roles.role_id = roles.id
+                GROUP BY users.ID";
+        
         // Execute the query and return all fetched records
-        return $this->db->runSQL($sql)->fetchAll();
+        $result = $this->db->runSQL($sql)->fetchAll(PDO::FETCH_ASSOC);
+    
+        foreach ($result as &$row) {
+            $row['role'] = $row['roles'];
+            unset($row['roles']);
+        }
+    
+        return $result;
     }
-
     // Method to update an existing member record
     public function update_member(array $member)
     {
         // SQL query to update a member's information
-        $sql = "UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email WHERE id = :id";
+        $sql = "UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, role_id = :role_id WHERE id = :id";
         // Execute the query with the provided updated data
         return $this->db->runSQL($sql, $member)->execute();
     }
@@ -65,22 +76,28 @@ class MemberController {
     public function register_member(array $member)
     {
         try {
+            // Check if a role is provided, otherwise set a default role
+            if (!isset($member['role_id'])) {
+                // Default role 
+                $member['role_id'] = 1; // Set default role_id to User
+            }
+    
             // SQL query to insert a new member record
-            $sql = "INSERT INTO users(firstname, lastname, email, password) 
-                    VALUES (:firstname, :lastname, :email, :password)"; 
-
+            $sql = "INSERT INTO users(firstname, lastname, email, password, role_id) 
+                    VALUES (:firstname, :lastname, :email, :password, :role_id)"; 
+    
             // Execute the query with the provided member data
             $this->db->runSQL($sql, $member);
             return true;
-
+    
         } catch (PDOException $e) {
             // Handle specific error codes (like duplicate entry)
-            if ($e->getCode() == 23000) { // Possible duplicate entry
+            if ($e->getCode() == 23000) { 
                 return false;
             }
             throw $e;
         }
-    }   
+    }  
 
     // Method to validate member login
     public function login_member(string $email, string $password)
@@ -104,9 +121,19 @@ class MemberController {
         $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
         $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
         return $roles;
     }
+
+    public function get_all_roles()
+{
+    // SQL query to select all roles
+    $sql = "SELECT * FROM roles";
+
+    // Execute the query and return all fetched roles
+    return $this->db->runSQL($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+    
 }
 
 ?>

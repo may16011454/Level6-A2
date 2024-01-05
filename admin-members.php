@@ -12,17 +12,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['ID'])
     // Call a function to handle the deletion
     $memberController->delete_member($memberId);
 
-    // Redirect back to the admin-equipments.php page to avoid duplicate form submissions
+    // Redirect back to the admin-members.php page to avoid duplicate form submissions
     header('Location: admin-members.php');
     exit;
 }
 
-// Check for the edit action
+// Check for the user action
 if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['ID'])) {
-    // Retrieve the id of the equipment to be edited
+    // Retrieve the id of the user to be edited
     $memberId = $_GET['ID'];
 
-    // Redirect to the edit page with the equipment ID
+    // Redirect to the edit page with the user ID
     header("Location: admin-members.php?id=$memberId");
     exit;
 }
@@ -32,38 +32,43 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
     // Process the submitted form data
     $id = intval($_POST['ID']);
     $firstname = InputProcessor::processString($_POST['firstname']);
+    $lastname = InputProcessor::processString($_POST['lastname']);
     $email = InputProcessor::processString($_POST['email']);
+    $role_id = intval($_POST['role_id']);  // Add this line to get the role_id
 
     // Validate inputs
-    $valid = $name['valid'] && $description['valid'] && $image['valid'];
+    $valid = $firstname['valid'] && $lastname['valid'] && $email['valid'];
 
     if ($valid) {
-        // Update the equipment
+        // Update the user
         $memberData = [
-            'ID' => $id,
-            'firstname' => $name['value'],
-            'email' => $description['value'],
+            'id' => $id,
+            'firstname' => $firstname['value'],
+            'lastname' => $lastname['value'],
+            'email' => $email['value'],
+            'role_id' => $role_id,  // Include the role_id
         ];
 
         $success = $memberController->update_member($memberData);
 
         if ($success) {
             // Redirect or show success message
-            redirect('./admin-equipments.php');
+            redirect('./admin-members.php');
         } else {
-            $message = "Failed to update equipment. Please try again.";
+            $message = "Failed to update user. Please try again.";
         }
     } else {
         $message = "Please fix the above errors:";
     }
 }
 
+
 ?>
 
 <div class="container mt-4">
     <h2>Admin Dashboard - Manage Users</h2>
-    
-    <a href="admin-equipments-add.php" class="btn btn-primary mb-3">Add New users</a>
+
+    <a href="admin-members-add.php" class="btn btn-primary mb-3">Add New users</a>
 
     <table class="table table-striped">
         <thead>
@@ -71,24 +76,37 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $member = $memberController->get_all_members();
-            foreach ($member as $member): ?>
+            $members = $memberController->get_all_members();
+            foreach ($members as $member): ?>
                 <tr>
-                    <td><?= htmlspecialchars($member['firstname']) ?></td>
-                    <td><?= htmlspecialchars($member['lastname']) ?></td>
-                    <td><?= htmlspecialchars($member['email']) ?></td>
                     <td>
-                        <a href="admin-equipments-edit.php?action=edit&id=<?= $member['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="admin-equipments.php?action=delete&id=<?= $member['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                        <?= htmlspecialchars($member['firstname']) ?>
+                    </td>
+                    <td>
+                        <?= htmlspecialchars($member['lastname']) ?>
+                    </td>
+                    <td>
+                        <?= htmlspecialchars($member['email']) ?>
+                    </td>
+                    <td>
+                        <?= htmlspecialchars($member['role']) ?>
+                    </td>
+                    <td>
+                        <a href="admin-members-edit.php?action=edit&ID=<?= $member['ID'] ?>"
+                            class="btn btn-warning btn-sm">Edit</a>
+                        <a href="admin-members.php?action=delete&ID=<?= $member['ID'] ?>" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
+
     </table>
 </div>
 
