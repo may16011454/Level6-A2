@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
     $firstname = InputProcessor::processString($_POST['firstname']);
     $lastname = InputProcessor::processString($_POST['lastname']);
     $email = InputProcessor::processString($_POST['email']);
-    $role_id = intval($_POST['role_id']);  // Add this line to get the role_id
+    $role_id = intval($_POST['role_id']);  
 
     // Validate inputs
     $valid = $firstname['valid'] && $lastname['valid'] && $email['valid'];
@@ -46,7 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
             'firstname' => $firstname['value'],
             'lastname' => $lastname['value'],
             'email' => $email['value'],
-            'role_id' => $role_id,  // Include the role_id
+            'role_id' => $role_id, 
         ];
 
         $success = $memberController->update_member($memberData);

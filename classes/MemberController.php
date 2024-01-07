@@ -62,15 +62,23 @@ class MemberController {
         return $this->db->runSQL($sql, $member)->execute();
     }
 
-    // Method to delete a member record by its ID
-    public function delete_member(int $id)
-    {
-        // SQL query to delete a member by its ID
-        $sql = "DELETE FROM users WHERE id = :id";
-        $args = ['id' => $id];
-        // Execute the query
-        return $this->db->runSQL($sql, $args)->execute();
+// Method to delete a member record by its ID
+public function delete_member(int $id)
+{
+    try {
+        // Delete user roles 
+        $deleteUserRoleSql = "DELETE FROM user_roles WHERE user_id = :id";
+        $this->db->runSQL($deleteUserRoleSql, ['id' => $id])->execute();
+
+        // delete the user
+        $deleteUserSql = "DELETE FROM users WHERE ID = :id";
+        $this->db->runSQL($deleteUserSql, ['id' => $id])->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        return false;
     }
+}
 
     // Method to register a new member
     public function register_member(array $member)
