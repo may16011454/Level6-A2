@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
     $firstname = InputProcessor::processString($_POST['firstname']);
     $lastname = InputProcessor::processString($_POST['lastname']);
     $email = InputProcessor::processString($_POST['email']);
-    $role_id = intval($_POST['role_id']);  
+    $role_id = intval($_POST['role_id']);  // Add this line to get the role_id
 
     // Validate inputs
     $valid = $firstname['valid'] && $lastname['valid'] && $email['valid'];
@@ -52,6 +52,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
         $success = $memberController->update_member($memberData);
 
         if ($success) {
+            // Update the user role in user_roles table
+            $memberController->updateUserRole($id, $role_id);
+
             // Redirect or show success message
             redirect('./admin-members.php');
         } else {
@@ -61,6 +64,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
         $message = "Please fix the above errors:";
     }
 }
+
+
 
 
 ?>
@@ -83,7 +88,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
         <tbody>
             <?php
             $members = $memberController->get_all_members();
-            foreach ($members as $member): ?>
+            foreach ($members as $member) : ?>
                 <tr>
                     <td>
                         <?= htmlspecialchars($member['firstname']) ?>
@@ -98,10 +103,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
                         <?= htmlspecialchars($member['role'] ?? '') ?>
                     </td>
                     <td>
-                        <a href="admin-members-edit.php?action=edit&ID=<?= $member['ID'] ?>"
-                            class="btn btn-warning btn-sm">Edit</a>
-                        <a href="admin-members.php?action=delete&ID=<?= $member['ID'] ?>" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                        <a href="admin-members-edit.php?action=edit&ID=<?= $member['ID'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="admin-members.php?action=delete&ID=<?= $member['ID'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

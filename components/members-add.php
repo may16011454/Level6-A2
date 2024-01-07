@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $firstname = InputProcessor::processString($_POST['firstname']);
     $lastname = InputProcessor::processString($_POST['lastname']);
     $email = InputProcessor::processString($_POST['email']);
-    $password = InputProcessor::processString($_POST['password']); 
+    $password = InputProcessor::processString($_POST['password']);
 
     // Validate all inputs
     $valid = $firstname['valid'] && $lastname['valid'] && $email['valid'] && $password['valid'];
@@ -38,6 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+// Establish a PDO connection
+$dsn = 'mysql:host=localhost;dbname=shopa2;charset=utf8mb4';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO($dsn, $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Fetch available roles
+$rolesStmt = $pdo->query("SELECT * FROM roles");
+$roles = $rolesStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- HTML form for adding users -->
@@ -70,9 +86,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input required type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" required />
                                 <span class="text-danger"><?= $password['error'] ?? '' ?></span>
                             </div>
+                            <!-- Add a dropdown for selecting roles -->
+                            <div class="form-group">
+                                <label for="role_id">Select Role:</label>
+                                <select name="role_id" id="role_id" class="form-control">
+                                    <?php foreach ($roles as $role) : ?>
+                                        <option value="<?= $role['id'] ?>">
+                                            <?= htmlspecialchars($role['name']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
                             <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Submit</button>
-                            <?php if ($message): ?>
+                            <?php if ($message) : ?>
                                 <div class="alert alert-danger mt-4" role="alert">
                                     <?= $message ?? '' ?>
                                 </div>

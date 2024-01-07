@@ -133,6 +133,43 @@ class MemberController {
     // Execute the query and return all fetched roles
     return $this->db->runSQL($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+// Members controller method to update user role in user_roles table using PDO
+public function updateUserRole($userId, $roleId) {
+    try {
+        // Your PDO connection
+        $pdo = new PDO("mysql:host=localhost;dbname=shopa2", "root", "");
+
+        // Set the PDO error mode to exception
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Check if the user already has a role in the user_roles table
+        $stmt = $pdo->prepare("SELECT * FROM user_roles WHERE user_id = :userId");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            // User already exists in user_roles, update the role
+            $updateStmt = $pdo->prepare("UPDATE user_roles SET role_id = :roleId WHERE user_id = :userId");
+            $updateStmt->bindParam(':roleId', $roleId, PDO::PARAM_INT);
+            $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $updateStmt->execute();
+        } else {
+            // User doesn't exist in user_roles, insert a new record
+            $insertStmt = $pdo->prepare("INSERT INTO user_roles (user_id, role_id) VALUES (:userId, :roleId)");
+            $insertStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $insertStmt->bindParam(':roleId', $roleId, PDO::PARAM_INT);
+            $insertStmt->execute();
+        }
+    } catch (PDOException $e) {
+        // Handle the exception as needed (e.g., log, display an error message)
+        echo "Error updating user role: " . $e->getMessage();
+    }
+}
     
 }
 
