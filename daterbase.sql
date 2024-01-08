@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 07, 2024 at 01:17 AM
+-- Generation Time: Jan 08, 2024 at 02:24 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,7 +45,7 @@ INSERT INTO `equipments` (`id`, `name`, `description`, `image`) VALUES
 (11, 'watermelon', 'melonish', 'https://blog-images-1.pharmeasy.in/2020/08/28152823/shutterstock_583745164-1.jpg'),
 (12, 'ironman', 'metal', 'https://i.imgur.com/uhndF3E.jpeg'),
 (15, 'Lego', 'brick', 'https://m.media-amazon.com/images/I/41Y-LXWb03L._AC_UF894,1000_QL80_.jpg'),
-(16, 'ss', 'aa', 'ss');
+(17, 'ss', 'aa', 'ss');
 
 -- --------------------------------------------------------
 
@@ -67,6 +67,28 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `createdOn`, `modifiedOn`) VALUES
 (1, 'admin', '2024-01-03 10:38:52', '2024-01-03 10:38:52'),
 (2, 'user', '2024-01-05 13:49:28', '2024-01-06 23:58:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `contact_email` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `contact_email`) VALUES
+(1, 'ASDA', 'asda@grocers.net'),
+(3, 'Tesco', 'Tesco@Tesco.uk.com'),
+(5, 'Aldi', 'Aldi@supermakets.book'),
+(8, 'HomeBargains', 'HB@grocer.gov.uk');
 
 -- --------------------------------------------------------
 
@@ -96,7 +118,7 @@ INSERT INTO `users` (`ID`, `firstname`, `lastname`, `password`, `email`, `role_i
 (22, 'nattest', 'test', '$2y$10$rb0HIlhlYpD7fEl1CorkruMx1Midau9ATp/WXIFhynTJyNrMUWUES', 'natest@gmail.com', 2, '2024-01-03 12:10:16', '2024-01-07 00:29:33'),
 (23, 'logan', 'testing', '$2y$10$SL93ILWeFsWcKdiFVagOSuNhLt/F7gickNYMbcom1JiXxZ9SKLWQG', 'logan@mail.net', 2, '2024-01-05 13:47:45', '2024-01-07 00:35:18'),
 (25, 'testthefirst', 'raaaa', '$2y$10$4OzGIFBFI5CZ0BT7sHulm.Uux5BOmR2V9X/eBvs.rkrwINV2g5SSS', 'rah@test.net', 2, '2024-01-07 00:05:11', '2024-01-07 00:29:41'),
-(38, 'Real', 'Person', '$2y$10$aoUxWbLakTD6QHYk3mA8cOaVANGDgjMUjoQkd8pI3gTHh0dxMDL8.', 'ImReal@normalmail.com', 2, '2024-01-07 01:15:51', '2024-01-07 01:16:51');
+(40, 'Fake', 'Person', '$2y$10$GCbxwwcpORzF2zNbW/8J1eoTHmDlv6PVq0GqOctCulXkeiaLibi.O', 'real@lol.com', 2, '2024-01-07 01:23:45', '2024-01-07 01:23:45');
 
 -- --------------------------------------------------------
 
@@ -120,7 +142,7 @@ INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
 (22, 2),
 (23, 2),
 (25, 2),
-(38, 2);
+(40, 2);
 
 --
 -- Indexes for dumped tables
@@ -136,6 +158,12 @@ ALTER TABLE `equipments`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -159,7 +187,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -168,10 +196,16 @@ ALTER TABLE `roles`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Constraints for dumped tables
