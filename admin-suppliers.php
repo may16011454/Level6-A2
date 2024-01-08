@@ -15,7 +15,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
     $supplierController->delete_supplier($supplierId);
 
     // Redirect back to the admin-supplier.php page to avoid duplicate form submissions
-    header('Location: admin-supplier.php');
+    header('Location: admin-suppliers.php');
     exit;
 }
 
@@ -25,7 +25,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) 
     $supplierId = $_GET['id'];
 
     // Redirect to the edit page with the supplier ID
-    header("Location: admin-supplier-edit.php?id=$supplierId");
+    header("Location: admin-suppliers-edit.php?id=$supplierId");
     exit;
 }
 
@@ -51,7 +51,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
 
         if ($success) {
             // Redirect or show success message
-            redirect('./admin-supplier.php');
+            redirect('./admin-suppliers.php');
         } else {
             $message = "Failed to update supplier. Please try again.";
         }

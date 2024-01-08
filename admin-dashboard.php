@@ -42,7 +42,7 @@ session_start();
                     <div class="card-body">
                         <h5 class="card-title">Manage Suppliers</h5>
                         <p class="card-text">View and manage suppliers</p>
-                        <a href="admin-supplier.php" class="btn btn-primary">Go to Suppliers</a>
+                        <a href="admin-suppliers.php" class="btn btn-primary">Go to Suppliers</a>
                     </div>
                 </div>
             </div>

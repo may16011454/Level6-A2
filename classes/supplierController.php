@@ -11,8 +11,23 @@ class SupplierController
 
     public function create_supplier(array $supplier_data)
     {
+        // SQL query to insert new supplier data into the suppliers table
         $sql = "INSERT INTO suppliers (name, contact_email) VALUES (:name, :contact_email)";
-        return $this->db->runSQL($sql, $supplier_data)->execute();
+    
+        try {
+            // Execute the SQL query with the provided supplier data
+            $this->db->runSQL($sql, $supplier_data);
+    
+            // Return the ID of the last inserted supplier
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            // Handle specific error codes or log the error
+            if ($e->getCode() == 23000) {
+                // Unique constraint violation (e.g., duplicate entry)
+                return false;
+            }
+            throw $e; // Re-throw the exception for other cases
+        }
     }
 
     public function get_supplier_by_id(int $supplier_id)
