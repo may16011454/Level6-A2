@@ -89,7 +89,7 @@ $roles = $rolesStmt->fetchAll(PDO::FETCH_ASSOC);
                             <!-- Add a dropdown for selecting roles -->
                             <div class="form-group">
                                 <label for="role_id">Select Role:</label>
-                                <select name="role_id" id="role_id" class="form-control">
+                                <select name="role_id" id="role" class="form-control">
                                     <?php foreach ($roles as $role) : ?>
                                         <option value="<?= $role['id'] ?>">
                                             <?= htmlspecialchars($role['name']) ?>
