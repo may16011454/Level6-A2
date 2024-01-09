@@ -54,7 +54,7 @@ session_start();
                     <div class="card-body">
                         <h5 class="card-title">Manage Catagories</h5>
                         <p class="card-text">View and manage catagories</p>
-                        <a href="#" class="btn btn-primary">Go to Catagories</a>
+                        <a href="admin-category.php" class="btn btn-primary">Go to Catagories</a>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,8 @@ class equipmentController
     public function create_equipment(array $equipment_data)
     {
         // SQL query to insert equipment data into the equipments table
-        $sql = "INSERT INTO equipments (name, description, image, supplier_id) VALUES (:name, :description, :image, :supplier_id)";
+        $sql = "INSERT INTO equipments (name, description, image, supplier_id, category_id) 
+                VALUES (:name, :description, :image, :supplier_id, :category_id)";
 
         try {
             // Prepare the SQL statement
@@ -26,6 +27,7 @@ class equipmentController
             $stmt->bindParam(':description', $equipment_data['description']);
             $stmt->bindParam(':image', $equipment_data['image']);
             $stmt->bindParam(':supplier_id', $equipment_data['supplier_id']);
+            $stmt->bindParam(':category_id', $equipment_data['category_id']); // Add this line for category
 
             // Execute the statement
             return $stmt->execute();
@@ -58,15 +60,16 @@ class equipmentController
         return $this->db->runSQL($sql)->fetchAll();
     }
 
-    // Function to update an existing equipment entry in the database
-    public function update_equipment(array $equipment)
-    {
-        // SQL query to update equipment data in the equipments table
-        $sql = "UPDATE equipments SET name = :name, description = :description, image = :image, supplier_id = :supplier_id WHERE id = :id";
+// Function to update an existing equipment entry in the database
+public function update_equipment(array $equipment)
+{
+    // SQL query to update equipment data in the equipments table
+    $sql = "UPDATE equipments SET name = :name, description = :description, image = :image, supplier_id = :supplier_id, category_id = :category_id WHERE id = :id";
 
-        // Execute the SQL query with the provided equipment data
-        return $this->db->runSQL($sql, $equipment)->execute();
-    }
+    // Execute the SQL query with the provided equipment data
+    return $this->db->runSQL($sql, $equipment)->execute();
+}
+
 
 
     // Function to delete a specific equipment entry by its ID
@@ -80,11 +83,24 @@ class equipmentController
         return $this->db->runSQL($sql, $args)->execute();
     }
 
-    public function get_all_equipments_with_suppliers()
+    public function get_all_equipments_with_suppliers_and_categories()
     {
-        $sql = "SELECT e.*, s.name as supplier_name
+        $sql = "SELECT e.*, s.name AS supplier_name, c.name AS category_name
+                FROM equipments e
+                LEFT JOIN suppliers s ON e.supplier_id = s.id
+                LEFT JOIN categories c ON e.category_id = c.id";
+
+        return $this->db->runSQL($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Function to retrieve all equipment entries with category information from the database
+    public function get_all_equipments_with_categories()
+    {
+        $sql = "SELECT e.*, c.name as category_name, s.name as supplier_name
             FROM equipments e
+            LEFT JOIN categories c ON e.category_id = c.id
             LEFT JOIN suppliers s ON e.supplier_id = s.id";
+
         return $this->db->runSQL($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

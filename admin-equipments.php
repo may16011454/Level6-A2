@@ -22,6 +22,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
     $description = InputProcessor::processString($_POST['description']);
     $image = InputProcessor::processString($_POST['image']);
     $supplier_id = intval($_POST['supplier_id']);
+    $category_id = intval($_POST['category_id']); 
 
     // Validate inputs
     $valid = $name['valid'] && $description['valid'] && $image['valid'];
@@ -34,6 +35,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
             'description' => $description['value'],
             'image' => $image['value'],
             'supplier_id' => $supplier_id,
+            'category_id' => $category_id, 
         ];
 
         $success = $equipmentController->update_equipment($equipmentData);
@@ -51,30 +53,30 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
 ?>
 
 <div class="container mt-4">
-    <h2>Admin Dashboard - Equipment Inventory</h2>
+    <h2>Admin Dashboard - Inventory</h2>
+    <a href="admin-equipments-add.php" class="btn btn-primary mb-3">Add New Product</a>
 
-    <a href="admin-equipments-add.php" class="btn btn-primary mb-3">Add New Equipment</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Image</th>
-                <th>Name</th>
+                <th>Equipment Name</th>
                 <th>Description</th>
+                <th>Image</th>
+                <th>Category</th>
                 <th>Supplier</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $equipmentsWithSuppliers = $equipmentController->get_all_equipments_with_suppliers();
-            foreach ($equipmentsWithSuppliers as $equipment) : ?>
+            $equipments = $equipmentController->get_all_equipments_with_categories();
+            foreach ($equipments as $equipment) : ?>
                 <tr>
-                    <td>
-                        <img src="<?= htmlspecialchars($equipment['image']) ?>" alt="Image of <?= htmlspecialchars($equipment['description']) ?>" style="width: 100px; height: auto;">
-                    </td>
                     <td><?= htmlspecialchars($equipment['name']) ?></td>
                     <td><?= htmlspecialchars($equipment['description']) ?></td>
-                    <td><?= htmlspecialchars($equipment['supplier_name'] ?? '') ?></td>
+                    <td><img src="<?= htmlspecialchars($equipment['image']) ?>" alt="<?= htmlspecialchars($equipment['name']) ?>" style="max-width: 100px;"></td>
+                    <td><?= htmlspecialchars($equipment['category_name'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($equipment['supplier_name'] ?? 'N/A') ?></td>
                     <td>
                         <a href="admin-equipments-edit.php?action=edit&id=<?= $equipment['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
                         <a href="admin-equipments.php?action=delete&id=<?= $equipment['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
@@ -83,6 +85,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
+
 
 </div>
 

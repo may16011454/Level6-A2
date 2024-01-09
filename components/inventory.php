@@ -11,28 +11,28 @@ $equipment = $controllers->equipment()->get_all_equipments();
 <!-- HTML for displaying the equipment inventory -->
 <div class="container mt-4">
     <h2>Products</h2>
+
     <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $equipments = $equipmentController->get_all_equipments_with_suppliers();
-        foreach ($equipments as $equipment): ?>
+        <thead>
             <tr>
-                <td>
-                    <img src="<?= htmlspecialchars($equipment['image']) ?>" 
-                        alt="Image of <?= htmlspecialchars($equipment['description']) ?>" 
-                        style="width: 100px; height: auto;">
-                </td>
-                <td><?= htmlspecialchars($equipment['name']) ?></td>
-                <td><?= htmlspecialchars($equipment['description']) ?></td>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Category</th>
+
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php
+            $equipments = $equipmentController->get_all_equipments_with_categories();
+            foreach ($equipments as $equipment) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($equipment['name']) ?></td>
+                    <td><?= htmlspecialchars($equipment['description']) ?></td>
+                    <td><img src="<?= htmlspecialchars($equipment['image']) ?>" alt="<?= htmlspecialchars($equipment['name']) ?>" style="max-width: 100px;"></td>
+                    <td><?= htmlspecialchars($equipment['category_name'] ?? 'N/A') ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
