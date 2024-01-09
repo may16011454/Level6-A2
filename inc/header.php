@@ -25,7 +25,7 @@
           <a class="nav-link" href="./index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./Inventory.php">Equipment</a>
+          <a class="nav-link" href="./Inventory.php">Products</a>
         </li>
       </ul>
 

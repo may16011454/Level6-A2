@@ -12,7 +12,7 @@ class DatabaseController extends PDO {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Set default fetch mode to associative array
             PDO::ATTR_EMULATE_PREPARES => false, // Disable emulation of prepared statements
         ];
- 
+        
         // Construct the parent class (PDO) with the DSN, username, password, and options
         parent::__construct($dsn, $username, $password, $options);
     }
