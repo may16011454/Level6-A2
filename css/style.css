@@ -1,0 +1,17 @@
+.jumbotron {
+  background-image: url("https://global.discourse-cdn.com/pocketgems/uploads/episodeinteractive/original/4X/3/b/9/3b989297b4f7be0e991c922072c9592c70dd0275.jpeg");
+  background-size: cover;
+  background-position: center;
+  color: #000000;
+}
+
+.jumbotron h1 {
+  font-family: sans-serif;
+  font-size: 5em;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.navbar.bg-dark {
+  background-color: #593196 !important; /* Use your desired green color */
+}
