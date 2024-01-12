@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
 
-# Selenium code to edit a category
+# Selenium code to edit product in inventory
 
 # Launch Chrome
 driver = webdriver.Chrome()

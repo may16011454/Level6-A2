@@ -6,7 +6,7 @@ from selenium.webdriver.common.alert import Alert
 import time
 
 
-#Selenium code to register a user then add another user through the admin dashboard
+#Selenium code to delete a supplier
 
 # Launch Chrome
 driver = webdriver.Chrome()

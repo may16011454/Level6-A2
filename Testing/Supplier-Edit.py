@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 import time
 
 
-#Selenium code to register a user then add another user through the admin dashboard
+#Selenium code to edit a supplier
 
 # Launch Chrome
 driver = webdriver.Chrome()
