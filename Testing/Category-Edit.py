@@ -2,11 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.alert import Alert
 import time
 
 
-#Selenium code to register a user then add another user through the admin dashboard
+#Selenium code to edit a category 
 
 # Launch Chrome
 driver = webdriver.Chrome()
@@ -33,19 +32,23 @@ login_button.click()
 
 time.sleep(2)
 
-# Go to manage suppliers page
-add_supplier_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-suppliers.php"]')
-add_supplier_link.click()
+# Go to the manage category page
+edit_category_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-category.php"]')
+edit_category_link.click()
 
+# Edit top user button
+edit_category_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[1]/td[2]/a[1]')
+edit_category_button.click()
 
-# delete bottom user button
-delete_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[8]/td[3]/a[2]')
-delete_button.click()
+# Fill in information
+name_input = driver.find_element(By.ID, 'name')
+# Clear the text in the input field
+name_input.clear()
+name_input.send_keys('Fruits Edit Test')
 
-
-# Switch to the alert and accept it
-alert = Alert(driver)
-alert.accept()
+# Submit  form
+submit_button = driver.find_element(By.XPATH, '/html/body/div/form/button')
+submit_button.click()
 
 time.sleep(2)
 

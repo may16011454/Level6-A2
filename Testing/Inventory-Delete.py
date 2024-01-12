@@ -13,7 +13,7 @@ driver = webdriver.Chrome()
 driver.maximize_window()
 
 # Open the website
-driver.get('http://localhost/logan/A2/A2(New)/app/index.php') 
+driver.get('http://localhost/logan/A2/A2(New)/app/index.php')
 
 # Go to login form
 login_link = driver.find_element(By.CLASS_NAME, 'nav-link[href="./login.php"]')
@@ -22,10 +22,10 @@ login_link.click()
 # Log in as admin
 # Fill in login details
 login_email_input = driver.find_element(By.ID, 'email')
-login_email_input.send_keys('admin@admin.com') 
+login_email_input.send_keys('admin@admin.com')
 
 login_password_input = driver.find_element(By.ID, 'password')
-login_password_input.send_keys('Password.11') 
+login_password_input.send_keys('Password.11')
 
 # Submit the login form
 login_button = driver.find_element(By.XPATH, '/html/body/form/section/div/div/div/div/div/button')
@@ -33,13 +33,13 @@ login_button.click()
 
 time.sleep(2)
 
-# Go to manage suppliers page
-add_supplier_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-suppliers.php"]')
-add_supplier_link.click()
+# Go to the manage inventory page
+edit_category_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-equipments.php"]')
+edit_category_link.click()
 
 
 # delete bottom user button
-delete_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[8]/td[3]/a[2]')
+delete_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[8]/td[6]/a[2]')
 delete_button.click()
 
 

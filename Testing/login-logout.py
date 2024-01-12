@@ -35,3 +35,5 @@ time.sleep(2)
 # Logout 
 logout_button = driver.find_element(By.CLASS_NAME, 'nav-link[href="./logout.php"]')
 logout_button.click()
+
+time.sleep(2)

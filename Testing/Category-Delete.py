@@ -33,13 +33,13 @@ login_button.click()
 
 time.sleep(2)
 
-# Go to manage suppliers page
-add_supplier_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-suppliers.php"]')
-add_supplier_link.click()
+# Go to the manage category page
+edit_category_link = driver.find_element(By.CLASS_NAME, 'btn-primary[href="admin-category.php"]')
+edit_category_link.click()
 
 
 # delete bottom user button
-delete_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[8]/td[3]/a[2]')
+delete_button = driver.find_element(By.XPATH, '/html/body/div/table/tbody/tr[6]/td[2]/a[2]')
 delete_button.click()
 
 
