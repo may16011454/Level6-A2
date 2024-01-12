@@ -9,9 +9,10 @@ import time
 
 # Launch Chrome
 driver = webdriver.Chrome()
+driver.maximize_window()
 
 # Open the website
-driver.get('http://localhost/Level6-A2/app/index.php') 
+driver.get('http://localhost/logan/A2/A2(New)/app/index.php') 
 
 # Create a new account
 register_link = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[2]/div/div/a')

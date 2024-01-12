@@ -88,7 +88,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'update') {
 </div>
 
 
-
 </div>
 
 <?php require __DIR__ . "/inc/footer.php"; ?>
